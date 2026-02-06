@@ -1,14 +1,17 @@
 import 'dart:async';
 
 class TimeStream {
-  StreamController timeController = StreamController<DateTime>();
-  void timeStream() {
-    Timer.periodic(Duration(seconds: 1), (_) {
-      timeController.add(DateTime.now());
-    });
+  late final StreamController<DateTime> _timeController;
+
+  TimeStream() {
+    _timeController = StreamController();
   }
 
-  void closeStream() {
-    timeController.close();
+  Stream get timeStream => _timeController.stream;
+
+  void addTimeToStream() {
+    Timer.periodic(Duration(seconds: 1), (_) {
+      _timeController.add(DateTime.now());
+    });
   }
 }
